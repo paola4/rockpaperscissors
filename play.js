@@ -55,7 +55,13 @@ buttons.forEach((button) => {
 
       const p = document.createElement("p");
       p.textContent =
-        "Computer selected " + computerSelection + ". " + score.msg;
+        "You selected " +
+        playerSelection +
+        ". " +
+        "Computer selected " +
+        computerSelection +
+        ". " +
+        score.msg;
       result.appendChild(p);
       updateScores(score);
       total_plays += 1;
