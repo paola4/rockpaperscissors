@@ -38,33 +38,26 @@ function playRound(playerSelection, computerSelection) {
 const result = document.querySelector("#result");
 var total_plays = 0;
 var player_scores = { player: 0, computer: 0 };
+
 // Add an event listener to the buttons that calls the playRound function when clicked.
 const buttons = document.querySelectorAll("button");
 buttons.forEach((button) => {
   button.addEventListener("click", function () {
+    clearResults();
+    var playerSelection = button.id;
+    var computerSelection = getComputerChoice();
+    var score = playRound(playerSelection, computerSelection);
+
+    displayResult(playerSelection, computerSelection, score);
+    updateScores(score);
+    total_plays += 1;
+
+    // Check if the game is over.
     if (total_plays == 5) {
       getScores();
       getWinner();
       zeroScores();
       return;
-    } else {
-      clearResults();
-      var playerSelection = button.id;
-      var computerSelection = getComputerChoice();
-      var score = playRound(playerSelection, computerSelection);
-
-      const p = document.createElement("p");
-      p.textContent =
-        "You selected " +
-        playerSelection +
-        ". " +
-        "Computer selected " +
-        computerSelection +
-        ". " +
-        score.msg;
-      result.appendChild(p);
-      updateScores(score);
-      total_plays += 1;
     }
   });
 });
@@ -75,6 +68,18 @@ function getScores() {
   result.appendChild(p);
 }
 
+function displayResult(playerSelection, computerSelection, score) {
+  const p = document.createElement("p");
+  p.textContent =
+    "You selected " +
+    playerSelection +
+    ". " +
+    "Computer selected " +
+    computerSelection +
+    ". " +
+    score.msg;
+  result.appendChild(p);
+}
 function zeroScores() {
   total_plays = 0;
   player_scores = { player: 0, computer: 0 };
@@ -106,27 +111,3 @@ function clearResults() {
     }
   }
 }
-
-// function playGame(rounds = 5) {
-//   // Play a game of 'Rock', 'Paper', or 'Scissors'.
-//   var total_score = 0;
-
-//   for (i = 1; i <= rounds; i++) {
-//     console.log(total_score);
-//     var computerSelection = getComputerChoice();
-//     var playerSelection = prompt("Enter Rock, Paper, or Scissors: ");
-//     var score = playRound(playerSelection, computerSelection);
-//     console.log(`Round ${i}: ${score.msg}`);
-//     total_score += score.score;
-//   }
-//   if (total_score < 0) {
-//     return `Game over. You lose!`;
-//   } else if (total_score > 0) {
-//     return `Game over. You win!`;
-//   } else {
-//     return `Game over. Tie!`;
-//   }
-//   return total_score;
-// }
-
-// console.log(playGame());
