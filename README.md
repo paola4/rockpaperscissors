@@ -1,4 +1,6 @@
-# rockpaperscissors
+# Rock, Paper, Scissors
+
+**Live Version**: https://giselepao.la/rockpaperscissors/
 
 A simple game of rock, papers, scissors.
 
