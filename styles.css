@@ -24,6 +24,7 @@ body {
   font-style: normal;
   font-weight: 900;
   line-height: normal;
+  min-width: 120px;
 }
 
 .player {
@@ -69,6 +70,7 @@ body {
     justify-content: center;
     align-items: center;
     gap: 1em;
+    padding-bottom: 10px;
 
     button {
       background-color: transparent;
@@ -78,5 +80,21 @@ body {
         height: 164px;
       }
     }
+  }
+
+  #result {
+    display: inline-flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: start;
+    align-items: center;
+    min-height: 300px;
+    width: 100%;
+  }
+
+  #computer-choice {
+    align-self: center;
+    width: 164px;
+    height: 164px;
   }
 }

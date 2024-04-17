@@ -10,26 +10,34 @@ function playRound(playerSelection, computerSelection) {
   // Play a single round of 'Rock', 'Paper', or 'Scissors'.
   var player = playerSelection.toLowerCase();
   var computer = computerSelection.toLowerCase();
+  const instruction = document.getElementById("instruction");
 
   if (player == computer) {
+    instruction.textContent = "Tie!";
     return { msg: "Tie!", score: 0 };
   } else if (player == "rock") {
     if (computer == "scissors") {
-      return { msg: "You win! Rock beats Scissors.", score: 1 };
+      instruction.textContent = "Nice!";
+      return { msg: "You win!", score: 1 };
     } else {
-      return { msg: "You lose! Paper beats Rock.", score: -1 };
+      instruction.textContent = "Oops. Try again?";
+      return { msg: "You lose!", score: -1 };
     }
   } else if (player == "paper") {
     if (computer == "rock") {
-      return { msg: "You win! Paper beats Rock.", score: 1 };
+      instruction.textContent = "Good one!";
+      return { msg: "You win!", score: 1 };
     } else {
-      return { msg: "You lose! Scissors beats Paper.", score: -1 };
+      instruction.textContent = ":(. Try again?";
+      return { msg: "You lose!", score: -1 };
     }
   } else if (player == "scissors") {
     if (computer == "paper") {
-      return { msg: "You win! Scissors beats Paper.", score: 1 };
+      instruction.textContent = "Woo!";
+      return { msg: "You win!", score: 1 };
     } else {
-      return { msg: "You lose! Rock beats Scissors.", score: -1 };
+      instruction.textContent = "Rats. Try again?";
+      return { msg: "You lose!", score: -1 };
     }
   } else {
     return "Invalid input! Please enter 'Rock', 'Paper', or 'Scissors'.";
@@ -47,18 +55,10 @@ buttons.forEach((button) => {
     var playerSelection = button.id;
     var computerSelection = getComputerChoice();
     var score = playRound(playerSelection, computerSelection);
-
+    displayComputerChoice(computerSelection);
     displayResult(playerSelection, computerSelection, score);
     updateScores(score);
     total_plays += 1;
-
-    // Check if the game is over.
-    if (total_plays == 5) {
-      getScores();
-      getWinner();
-      zeroScores();
-      return;
-    }
   });
 });
 
@@ -66,6 +66,22 @@ function getScores() {
   const p = document.createElement("p");
   p.textContent = `Player: ${player_scores.player} Computer: ${player_scores.computer}`;
   result.appendChild(p);
+}
+function displayComputerChoice(computerSelection) {
+  const img = document.createElement("img");
+  switch (computerSelection) {
+    case "Rock":
+      img.src = "assets/rock_white.png";
+      break;
+    case "Paper":
+      img.src = "assets/paper_white.png";
+      break;
+    case "Scissors":
+      img.src = "assets/scissors_white.png";
+      break;
+  }
+  img.setAttribute("id", "computer-choice");
+  result.appendChild(img);
 }
 
 function displayResult(playerSelection, computerSelection, score) {
@@ -86,12 +102,18 @@ function zeroScores() {
 }
 
 function updateScores(score) {
+  const player_score = document.getElementById("player_score");
+  const computer_score = document.getElementById("computer_score");
+
   if (score.score == 1) {
     player_scores.player += 1;
   } else if (score.score == -1) {
     player_scores.computer += 1;
   }
+  player_score.textContent = player_scores.player;
+  computer_score.textContent = player_scores.computer;
 }
+
 function getWinner() {
   const winner =
     player_scores.player > player_scores.computer ? "Player" : "Computer";
@@ -105,9 +127,7 @@ function getWinner() {
 }
 
 function clearResults() {
-  if (total_plays == 0) {
-    while (result.firstChild) {
-      result.removeChild(result.firstChild);
-    }
+  while (result.firstChild) {
+    result.removeChild(result.firstChild);
   }
 }
